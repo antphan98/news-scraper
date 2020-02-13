@@ -1,22 +1,72 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">The Daily Times</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Saved <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Features</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-      </li>
-    </ul>
-  </div>
+    <a class="navbar-brand" href="/">The Daily Times</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/saved">Saved Articles<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <button type="button" id="scrape-articles-btn" class="btn btn-primary">Get New Articles</button>
+            </li>
+        </ul>
+    </div>
 </nav>
+
+<div class="container">
+    <div class="col-md-12">
+        <div class="row" id="articles">
+            {{#each article}}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 id='articleTitle' class="panel-title">{{this.title}}</h3>
+                </div>
+                <div class="panel-body">
+                    <a id='articleLink' href="{{this.link}}">{{this.link}}</a>
+                    <br>
+                    <button id="comment-btn" type="submit" class="btn btn-primary pull-right" data-toggle="modal"
+                        data-value="{{this._id}}" data-target="#commentModal" id="commentButton">View Comments</button>
+                    <form class="navbar-form pull-right" action="/save/{{this._id}}">
+                        <button type="submit" class="btn btn-primary" id="saveButton">Save Article</button>
+                    </form>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="scrape-modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title scrape-title" >Articles Scraped</h5>
+        </div>
+        <div class="modal-body scrape-body">
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary closeModalButton" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" id="articleSavedModal" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Article Saved</h5>
+      </div>
+      <div class="modal-body saved-article">
+        <p>Article saved!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary closeModalButton" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
